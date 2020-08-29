@@ -25,6 +25,7 @@ The practice and assignment for SQL.
 1. __Count__: retrieve the rows that match query criterion.
     - the number of rows of table: `select count(\*) from <tablename>;`
     - the number of rows that matching specific query criteiron: `select count(<columnname>) from <tablename> where <condition>;`
+    
 2. __Distinct__: retrieve the values without repetition.
     - select distinct <columnname> from <tablename>;
 
@@ -58,8 +59,8 @@ Register a DB2 on https://cloud.ibm.com.
 
 ## Week 2 - Advenced SQL Statement 
 ### 2.1 Using String Patterns, Ranges and Sets
-* String Patterns, use `like`, `%`;
-An example:
+* String Patterns, use `like`, `%`; 
+
 ```
 select <columnname> from <tablename> 
        where <columnname> like '%R%';
@@ -81,23 +82,91 @@ select <columnname> from <tablename>
 
 ### 2.2 Sorting Results Sets
 
-
-
+1. `order by` clause, default by ascending order:
+```
+select <columnname> from <tablename> 
+       order by <columnname>;
+```
+2. If wanna descending order, please add `desc` at the end of the clause:
+```
+select <columnname> from <tablename> 
+       order by <columnname> desc;
+```
 
 ### 2.3 Grouping Result Sets
+1. `group by` clause:
+```
+select <columnname>, count(<columnname>) as count_col from <tablename>
+       group by <columnname>;
+```
+where `as` define a colname for the retrieved column `count(<columnname>)`, or the retrieved column will be named by 2.
 
+2. `having` clause: restrict the result set by `having`, for example,
+```
+select <columnname>, count(<columnname>) as count_col from <tablename>
+       group by <columnname> having count(<columnname>) < 10;
+```
+__Note__: `having` clause is only work for `group by` clause. 'where' works for the entire dataset. 
 
 ### 2.4 Built-in Database functions
+1. Aggregate Function
+__Input__:  collection of values (e.g. entire column)
+__Output__: single value
 
+Example:
+- SUM()
+```
+select SUM(<columnname>) from <tablename>; 
+# or
+select SUM(<columnname>) as SUM_OF_COL from <tablename>;
+```
+
+- MIN(), MAX()
+```
+select MIN(<columnname>) from <tablename>; 
+```
+
+- AVG()
+```
+select AVG(<columnname>) from <tablename>;
+# or
+select AVG(<columnname> / <columnname>) from <tablename>;
+```
 
 ### 2.5 Data and Time Built-in Functions
+* `year(), month(), day(), week(), hour(), dayofmonth(), dayofweek(), dayofyear()`
+* `current_date`
 
 
+### 2.6 Sub-Queries & Nested Selected
+1. sub-queries: a query nest in another query
 
-### 2.6 Sub-Queries and Nested Selected
+2. the functions of sub-query:
+- use sub-query to calculate aggregate functions
+```
+select * from <tablename> 
+     where <columnname> < 
+     (select AVG(<columnname>) from <tablename>;)
+```
+- use sub-query to replace column name
 
+- use sub-query to replace table name 
+```
+select * from (select * from <tablename>) as TABNAME
+```
 
 ### 2.7 Multiple Tables
+1. Sub-queries
+```
+select * from <table1>
+      where <column1> in 
+      (select <column2> from <table2>);
+```
+2. Implicit JOIN
+```
+select T1.column1, T2.column2 from table1 T1, table2 T2 where T1.column3 = T2.column4;
+```
+3. JOin Operation
 
 
 
