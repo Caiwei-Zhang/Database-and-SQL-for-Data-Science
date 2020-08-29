@@ -2,7 +2,7 @@
 The practice and assignment for SQL.
 
 ## Week 1 - Introduction to Database & basic SQL commands 
-### Intro 
+### 1.1 Intro 
 * SQL: Structured Query Language. 
   - use for relational database; 
   - to query data.
@@ -10,17 +10,95 @@ The practice and assignment for SQL.
 * Relational database: data stored in tabular form is a relationnal database
 * Relational Database Management System (DBMS): the system used to manage relational database.
 
-### 5 basic SQL commands 
+* statement type
+  - Data Definition Language: define, alter, or drop data 
+  - Data Manipulation Language: read, modify data
+ 
+### 1.2 Five Basic SQL Commands 
 * create  ` create <tablename>(COLUMN1, COLUMN2, ... );`
 * insert  ` insert into <tablename> values (COLUMN1, COLUMN2, ...  ) ([value1], [value2], ...);` 
 * select  `select * from <tablename>` 
 * update  `update <tablename> set COLUMN = [value] where <condition>;`
-* delete  `drop <tablename>`
+* delete  `delete from <tablename> where <condition>`
 
-### Use DB2: Create a Database Instance on Clould
+### 1.3 Count, Distinct, Limit
+1. __Count__: retrieve the rows that match query criterion.
+    - the number of rows of table: `select count(\*) from <tablename>;`
+    - the number of rows that matching specific query criteiron: `select count(<columnname>) from <tablename> where <condition>;`
+2. __Distinct__: retrieve the values without repetition.
+    - select distinct <columnname> from <tablename>;
+
+3. __limit__: use to specify the number of rows when retrieve data.
+    - select * from <tablename> limit 10; \\
+**Tips**: fetch the first 10 rows;
+
+### 1.4 Insert Statement (DML)
+1. insert one row
+2. insert multiple rows
+
+### 1.5 Update Statement (DML)
+```
+update <tablename> set <columnname> = [value] (where <condition>);
+```
+
+### 1.5 Delete Statement (DML)
+```
+delete from <tablename> (where <condition>);
+```
+
+### 1.6 Drop Statement (DDL)
+```
+DROP TABLE tab_name； # delete database or table. If the object is not exist, a Error message will be return. 
+DROP TABLE IF NOT EXISTS tab_name;  # If the object is not exist, nothing will be done. 
+```
+
+
+### 1.3 Use DB2: Create a Database Instance on Clould
 Register a DB2 on https://cloud.ibm.com.
 
-## Week 2 - Advenced SQL statement 
+## Week 2 - Advenced SQL Statement 
+### 2.1 Using String Patterns, Ranges and Sets
+* String Patterns, use `like`, `%`;
+An example:
+```
+select <columnname> from <tablename> 
+       where <columnname> like '%R%';
+```
+where "%" is wildcard character that use to replace other character. 
+
+
+* Ranges, use `between and` & `>=, <=`
+```
+select <columnname> from <tablename> 
+       where <columnname> between v1 and v2;
+```
+
+* Sets, use `in ([value1], [value2], [value3])`
+```
+select <columnname> from <tablename> 
+       where <columnname> in ([value1], [value2], [value3]);
+```
+
+### 2.2 Sorting Results Sets
+
+
+
+
+### 2.3 Grouping Result Sets
+
+
+### 2.4 Built-in Database functions
+
+
+### 2.5 Data and Time Built-in Functions
+
+
+
+### 2.6 Sub-Queries and Nested Selected
+
+
+### 2.7 Multiple Tables
+
 
 
 ## Week 3 - Write SQL Using Python (take DB2 for instance)
@@ -53,7 +131,7 @@ Connect to DB2 database requires the following information:
   - User ID  (uid)
   - User Password
   
-(1) __Method 1__ 
+4.a __Method 1__ 
 
 __Step 1__: Replace the placeholder values with your actual Db2 hostname, username, and password:
 ```
@@ -91,7 +169,7 @@ except:
 ```
 When the connection is established, you can check the __information of Server__ by `ibm_db.server_info(conn)`; or check the __information of client__ `ibm_db.client_info()`.
 
-(2) __Method 2__
+4.b __Method 2__
 Load SQL extension in Python, and establish a connection with the database.
 ```
 %load_ext sql
@@ -154,9 +232,8 @@ __Step 2__:  connection for pandas
 ```
 pconn = ibm_db_dbi.Connection(conn)  # conn = ibm_db.connect(dsn, "", "")
 ```
-__Step 3__: 
+__Step 3__: query statement to retrieve all rows in INSTRUCTOR table 
 ```
-#query statement to retrieve all rows in INSTRUCTOR table
 selectQuery = "select * from INSTRUCTOR"
 
 #retrieve the query results into a pandas dataframe
