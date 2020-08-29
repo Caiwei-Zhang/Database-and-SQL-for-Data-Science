@@ -1,36 +1,36 @@
 # Database-and-SQL-for-Data-Science
 The practice and assignment for SQL.
 
-### Week 1 - Introduction to Database & basic SQL commands 
-#### Intro 
+## Week 1 - Introduction to Database & basic SQL commands 
+### Intro 
 * SQL, Structured Query Language. (use for relational database; To query data.)
 * Databse.
 * Relational database & Relational Database Management System.
 
-#### 5 basic SQL commands 
+### 5 basic SQL commands 
 * create  ` create <tablename>(COLUMN1, COLUMN2, ... );`
 * insert  ` insert into <tablename> values (COLUMN1, COLUMN2, ...  ) ([value1], [value2], ...);` 
 * select  `select * from <tablename>` 
 * update  `update <tablename> set COLUMN = [value] where <condition>;`
 * delete  `drop <tablename>`
 
-#### Use DB2: Create a Database Instance on Clould
+### Use DB2: Create a Database Instance on Clould
 Register a DB2 on https://cloud.ibm.com.
 
-### Week 2 - Advenced SQL statement 
+## Week 2 - Advenced SQL statement 
 
 
-### Week 3 - Write SQL Using Python (take DB2 for instance)
+## Week 3 - Write SQL Using Python (take DB2 for instance)
 
 #### 3.1 Access Database Using Python
 the Python code connects to the database by using "API" calls.
 
-#### 3.2 Using DB_API
+### 3.2 Using DB_API
 There are two steps to using Python DB_API:
 * Step 1: Connection Objects, connect database & manage transaction;
 * Step 2: Query Objects
 
-#### 3.3 Connecting to a Database Using ibm_db API
+### 3.3 Connecting to a Database Using ibm_db API
 1. **ibm_db API**: provides a variety of useful Python functions for accessing and manipulating data in IbM data server Database.
 
 2. Obtain the service credentials of your DB2 instance. For more details, please check the file in week 3/LAB-0-v6-Create-Db2-Service-Credentials.pdf.
@@ -50,7 +50,8 @@ Connect to DB2 database requires the following information:
   - User ID  (uid)
   - User Password
   
-* __Method 1__
+(1) __Method 1__ 
+
 __Step 1__: Replace the placeholder values with your actual Db2 hostname, username, and password:
 ```
 dsn_hostname = "hostname" # e.g.: "dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net"
@@ -85,9 +86,9 @@ try:
 except:
     print ("Unable to connect: ", ibm_db.conn_errormsg() )
 ```
-Whee the connection is established, you can check the __information of Server__ by `ibm_db.server_info(conn)`; or check the __information of client__ `ibm_db.client_info()`.
+When the connection is established, you can check the __information of Server__ by `ibm_db.server_info(conn)`; or check the __information of client__ `ibm_db.client_info()`.
 
-* __Method 2__
+(2) __Method 2__
 Load SQL extension in Python, and establish a connection with the database.
 ```
 %load_ext sql
@@ -99,7 +100,7 @@ Load SQL extension in Python, and establish a connection with the database.
 %sql ibm_db_sa://
 ```
 
-#### 3.4 Create Tables, Loading Data and Querying Data Using Python
+### 3.4 Create Tables, Loading Data and Querying Data Using Python
 
 Using function `ibm_db.exec_immediate(para1 = connection, para2 = QueryStatement, para3 = Options)`. 
 __3.4.1 Drop Tables__
