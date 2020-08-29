@@ -3,9 +3,12 @@ The practice and assignment for SQL.
 
 ## Week 1 - Introduction to Database & basic SQL commands 
 ### Intro 
-* SQL, Structured Query Language. (use for relational database; To query data.)
-* Databse.
-* Relational database & Relational Database Management System.
+* SQL: Structured Query Language. 
+  - use for relational database; 
+  - to query data.
+* Database: a repository of Data.
+* Relational database: data stored in tabular form is a relationnal database
+* Relational Database Management System (DBMS): the system used to manage relational database.
 
 ### 5 basic SQL commands 
 * create  ` create <tablename>(COLUMN1, COLUMN2, ... );`
@@ -22,20 +25,20 @@ Register a DB2 on https://cloud.ibm.com.
 
 ## Week 3 - Write SQL Using Python (take DB2 for instance)
 
-#### 3.1 Access Database Using Python
+### 3.1 Access Database Using Python
 the Python code connects to the database by using "API" calls.
 
 ### 3.2 Using DB_API
-There are two steps to using Python DB_API:
-* Step 1: Connection Objects, connect database & manage transaction;
-* Step 2: Query Objects
+There are two objects to using Python DB_API:
+* __Step 1__: Connection Objects, connect database & manage transaction;
+* __Step 2__: Query Objects
 
 ### 3.3 Connecting to a Database Using ibm_db API
 1. **ibm_db API**: provides a variety of useful Python functions for accessing and manipulating data in IbM data server Database.
 
-2. Obtain the service credentials of your DB2 instance. For more details, please check the file in week 3/LAB-0-v6-Create-Db2-Service-Credentials.pdf.
+2. Obtain the __service credentials of your DB2 instance__. For more details, please check the file in week 3/LAB-0-v6-Create-Db2-Service-Credentials.pdf.
 
-3. First import the ibm_db library into Python Application.
+3.  __Import the ibm_db__ library into Python Application.
 ```
 import ibm_db
 ```
@@ -139,5 +142,38 @@ selectStmt = ibm_db.exec_immediate(conn, selectQuery)
 #Fetch the Dictionary (for the first row only)
 ibm_db.fetch_both(selectStmt)
 ```
+### 3.5  Retrieve data into Pandas
+Retrieve the contents of table into Pandas dataframe.
 
+__Step 1__: import related libraries.
+```
+import pandas
+import ibm_db_dbi
+```
+__Step 2__:  connection for pandas
+```
+pconn = ibm_db_dbi.Connection(conn)  # conn = ibm_db.connect(dsn, "", "")
+```
+__Step 3__: 
+```
+#query statement to retrieve all rows in INSTRUCTOR table
+selectQuery = "select * from INSTRUCTOR"
+
+#retrieve the query results into a pandas dataframe
+df = pandas.read_sql(selectQuery, pconn)
+
+#print the entire data frame
+df
+
+# print how many rows and columns in the data frame
+df.shape
+```
+
+### 3.6 Close the connection 
+When you finish the use of DB2, remember close connections so that we can avoid unused connections taking up resources.
+```
+ibm_db.close(conn)
+```
+
+## Week 4 - Working with real-world data sets
 
