@@ -15,23 +15,26 @@ The practice and assignment for SQL.
   - Data Manipulation Language: read, modify data
  
 ### 1.2 Five Basic SQL Commands 
-* create  ` create <tablename>(COLUMN1, COLUMN2, ... );`
-* insert  ` insert into <tablename> values (COLUMN1, COLUMN2, ...  ) ([value1], [value2], ...);` 
-* select  `select * from <tablename>` 
-* update  `update <tablename> set COLUMN = [value] where <condition>;`
-* delete  `delete from <tablename> where <condition>`
+* create  ``` create <tablename>(COLUMN1, COLUMN2, ... );```
+* insert  ``` insert into <tablename> values (COLUMN1, COLUMN2, ...  ) ([value1], [value2], ...);``` 
+* select  ``` select * from <tablename>;```
+* update  ``` update <tablename> set COLUMN = [value] where <condition>;```
+* delete  ``` delete from <tablename> where <condition>;```  
 
 ### 1.3 Count, Distinct, Limit
-1. __Count__: retrieve the rows that match query criterion.
-    - the number of rows of table: `select count(\*) from <tablename>;`
-    - the number of rows that matching specific query criteiron: `select count(<columnname>) from <tablename> where <condition>;`
+__1.__ __Count__: retrieve the rows that match query criterion.
+    - the number of rows of table:
+    ```select count(*) from <tablename>;```
+    - the number of rows that matching specific query criteiron: 
+    ```select count(<columnname>) from <tablename> where <condition>;```
     
-2. __Distinct__: retrieve the values without repetition.
-    - select distinct <columnname> from <tablename>;
+__2.__ __Distinct__: retrieve the values without repetition.
+    ``` select distinct <columnname> from <tablename>;```
 
-3. __limit__: use to specify the number of rows when retrieve data.
-    - select * from <tablename> limit 10; \\
-**Tips**: fetch the first 10 rows;
+__3.__ __Limit__: use to specify the number of rows when retrieve data.
+    ``` select * from <tablename> limit 10; ```
+  
+**Tips**: equal to `fetch the first 10 rows;`
 
 ### 1.4 Insert Statement (DML)
 1. insert one row
@@ -49,8 +52,11 @@ delete from <tablename> (where <condition>);
 
 ### 1.6 Drop Statement (DDL)
 ```
-DROP TABLE tab_name； # delete database or table. If the object is not exist, a Error message will be return. 
-DROP TABLE IF NOT EXISTS tab_name;  # If the object is not exist, nothing will be done. 
+# delete database or table. If the object is not exist, a Error message will be return. 
+drop TABLE <tablename>； 
+
+# If the object is not exist, nothing will be done. 
+drop TABLE IF NOT EXISTS <tablename>;  
 ```
 
 
@@ -59,7 +65,7 @@ Register a DB2 on https://cloud.ibm.com.
 
 ## Week 2 - Advenced SQL Statement 
 ### 2.1 Using String Patterns, Ranges and Sets
-* String Patterns, use `like`, `%`; 
+__1. String Patterns__: use `like`, `%`; 
 
 ```
 select <columnname> from <tablename> 
@@ -68,13 +74,13 @@ select <columnname> from <tablename>
 where "%" is wildcard character that use to replace other character. 
 
 
-* Ranges, use `between and` & `>=, <=`
+__2. Ranges__: use `between and` & `>=, <=`
 ```
 select <columnname> from <tablename> 
        where <columnname> between v1 and v2;
 ```
 
-* Sets, use `in ([value1], [value2], [value3])`
+__3. Sets__: use `in`
 ```
 select <columnname> from <tablename> 
        where <columnname> in ([value1], [value2], [value3]);
@@ -82,30 +88,32 @@ select <columnname> from <tablename>
 
 ### 2.2 Sorting Results Sets
 
-1. `order by` clause, default by ascending order:
+__1. `order by` clause__, default by ascending order:
 ```
 select <columnname> from <tablename> 
        order by <columnname>;
 ```
-2. If wanna descending order, please add `desc` at the end of the clause:
+
+If wanna descending order, please add `desc` at the end of the clause:
 ```
 select <columnname> from <tablename> 
        order by <columnname> desc;
 ```
 
 ### 2.3 Grouping Result Sets
-1. `group by` clause:
+__1.  `group by` clause__
 ```
 select <columnname>, count(<columnname>) as count_col from <tablename>
        group by <columnname>;
 ```
 where `as` define a colname for the retrieved column `count(<columnname>)`, or the retrieved column will be named by 2.
 
-2. `having` clause: restrict the result set by `having`, for example,
+__2. `having` clause__: restrict the result set by `having`, for example,
 ```
 select <columnname>, count(<columnname>) as count_col from <tablename>
        group by <columnname> having count(<columnname>) < 10;
 ```
+
 __Note__: `having` clause is only work for `group by` clause. 'where' works for the entire dataset. 
 
 ### 2.4 Built-in Database functions
@@ -132,10 +140,11 @@ select AVG(<columnname>) from <tablename>;
 # or
 select AVG(<columnname> / <columnname>) from <tablename>;
 ```
+count() is also an aggregate function.
 
 ### 2.5 Data and Time Built-in Functions
 * `year(), month(), day(), week(), hour(), dayofmonth(), dayofweek(), dayofyear()`
-* `current_date`
+* `current_date, current_time`
 
 
 ### 2.6 Sub-Queries & Nested Selected
@@ -166,8 +175,13 @@ select * from <table1>
 ```
 select T1.column1, T2.column2 from table1 T1, table2 T2 where T1.column3 = T2.column4;
 ```
-3. JOin Operation
-
+3. Join Operation
+* inner join
+* outer join
+  - __left outer join__: all rows from the left table and any matching rows from the right table.
+    - most popular join, displays matches only (returns the rows that  match).
+  - __right outer join__: all row from the right table and any matching rows from the left table.
+  - __full outer join__: all rows from both tables.
 
 
 ## Week 3 - Write SQL Using Python (take DB2 for instance)
